@@ -1,6 +1,7 @@
 rootProject.name = 'mnay'
 
 include ':mnay-server'
+include ':mnay-common'
 include ':mnay-workflow'
 include ':mnay-workflow:workflow-client'
 include ':mnay-workflow:workflow-server'
