@@ -1,4 +1,4 @@
-package cn.induschain.mnayserver;
+package cn.mnay;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

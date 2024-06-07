@@ -1,0 +1,68 @@
+buildscript {
+    ext {
+        springBootVersion = '3.3.0'
+        camundaVersion = '7.18.0'
+        lombokVersion = '1.18.32'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.0'
+    id 'io.spring.dependency-management' version '1.1.5'
+}
+
+
+allprojects {
+    group = 'cn.mnay'
+    version = '1.0.0-SNAPSHOT'
+
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:3.3.0") // 引入Spring Boot BOM
+        // 引入camunda bom
+        mavenBom("org.camunda.bpm:camunda-bom:${camundaVersion}")
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot' // 如果子模块是Spring Boot应用，则启用
+    apply plugin: 'io.spring.dependency-management' // 继承依赖管理
+
+    group = rootProject.group
+    version = rootProject.version
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // lombok:
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        // configuration-processor:
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        // spring-boot-starter-web:
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+
+        // test:
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+}

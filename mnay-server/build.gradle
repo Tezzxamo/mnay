@@ -1,35 +1,15 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.0'
-    id 'io.spring.dependency-management' version '1.1.5'
-}
-
-group = 'cn.induschain'
-version = '1.0.0-SNAPSHOT'
-
-java {
-    sourceCompatibility = '21'
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
-repositories {
-    mavenCentral()
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
 }
 
 dependencies {
+    // 引用workflow-client
+    implementation project(':mnay-workflow:workflow-client')
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.named('test') {
+tasks.test {
     useJUnitPlatform()
 }

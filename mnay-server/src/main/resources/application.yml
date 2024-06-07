@@ -1,6 +1,27 @@
 spring:
   application:
     name: mnay-server
+  profiles:
+    include: minio,workflow,mysql
 
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
+
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui/
+    ## 需要时设置开启
+    enabled: ${SWAGGER_ENABLE:true}
+    ## 默认不展开，方便查看
+    doc-expansion: none
+    ## model展开的深度
+    default-model-expand-depth: 10
+    # API 排序
+    tags-sorter: alpha
+    # Http方法排序
+    operations-sorter: method
+  packages-to-scan: cn.mnay.controller
+
