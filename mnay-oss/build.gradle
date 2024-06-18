@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+dependencies {
+    // 引用mnay-common/mnay-api
+    implementation project(':mnay-common')
+    implementation project(':mnay-api')
+    // minio
+    implementation "io.minio:minio:${rootProject.properties['minioVersion']}"
+    implementation "com.amazonaws:aws-java-sdk-s3:${rootProject.properties['awsSdkVersion']}"
+}
+
+tasks.test {
+    useJUnitPlatform()
+}

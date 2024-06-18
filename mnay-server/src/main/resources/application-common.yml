@@ -1,0 +1,38 @@
+# JPA自动注释开关
+jpa:
+  comment:
+    enable: ${JPA_COMMENT:false}
+
+spring:
+  data:
+    redis:
+      database: ${REDIS_DATABASE:10}
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:123456}
+      timeout: ${REDIS_TIMEOUT:6000ms}
+      jedis:
+        pool:
+          max-active: ${REDIS_MAX_ACTIVE:1000}
+          max-wait: ${REDIS_MAX_WAIT:-1ms}
+          max-idle: ${REDIS_MAX_IDLE:10}
+          min-idle: ${REDIS_MIN_IDLE:0}
+  mail:
+    host: ${SMTP_EMAIL_HOST:smtp.exmail.qq.com}
+    port: ${SMTP_EMAIL_PORT:465}
+    username: ${SMTP_EMAIL_USERNAME:}
+    password: ${SMTP_EMAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          from: ${SMTP_DEFAULT_SEND_EMAIL:mnay@mnay.cn}
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+          auth: true
+          timeout: 60000
+          connectiontimeout: 60000
+          writetimeout: 60000
+          debug: true

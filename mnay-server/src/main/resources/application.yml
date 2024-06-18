@@ -2,7 +2,32 @@ spring:
   application:
     name: mnay-server
   profiles:
-    include: minio,workflow,mysql
+    include: common,auth,workflow,mysql
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    open-in-view: ${JPA_OPEN_IN_VIEW:false}
+    ## 默认关闭
+    show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        schema_update:
+          unique_constraint_strategy: RECREATE_QUIETLY
+        auto_quote_keyword: true
+        generate_statistics: false
+        default_batch_fetch_size: ${BATCH_FETCH_SIZE:1000}
+        order_by.default_null_ordering: last
+        jdbc:
+          time_zone: Asia/Shanghai
+          lob:
+            non_contextual_creation: true
+          # jpa批量插入设置，一次性批量插入1000条（需要在jdbc连接mysql的url上加上“rewriteBatchedStatements=true”）
+          batch_size: 1000
+
 
 server:
   port: ${SERVER_PORT:8080}
@@ -25,3 +50,14 @@ springdoc:
     operations-sorter: method
   packages-to-scan: cn.mnay.controller
 
+mnay:
+  # 异步线程池自定义配置
+  async-thread-pool:
+    enable: true
+
+# minio配置
+minio:
+  endpoint: ${MINIO_ENDPOINT:localhost:9000} #Minio服务所在地址
+  bucketName: ${MINIO_BUCKET_NAME:files} #桶名称
+  accessKey: ${MINIO_ACCESS_KEY:mnayuser} #访问的key
+  secretKey: ${MINIO_SECRET_KEY:root@123456} #访问的密钥

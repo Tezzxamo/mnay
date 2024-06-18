@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+dependencies {
+    // 引用mnay-common
+    implementation project(':mnay-common')
+    implementation project(':mnay-api')
+}
+
+tasks.test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,19 @@
+sa-token:
+  # token 名称（同时也是cookie名称）
+  token-name: Authorization
+  # cookie 关闭
+  is-read-cookie: false
+  # 是否写入header
+  is-write-header: true
+  # token 过期时间（单位：秒） 默认30天，-1表示永不过期，此处取两个小时
+  token-timeout: 7200
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: false
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: false
+  # 是否输出操作日志
+  is-log: true
+  # token前缀
+  #  token-prefix: Bearer
+  # token 密钥
+  jwt-secret-key: nT1HcEaL9Gm6Rr5zJNvKUW1q2YFgZbSj

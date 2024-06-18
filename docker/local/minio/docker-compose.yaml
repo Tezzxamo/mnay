@@ -1,0 +1,25 @@
+version: '3'
+services:
+  minio:
+    # 镜像名 （来自于minio官方docker-compose.yaml文件）
+    # 升级版本只需要更改image的内容，然后删除原先的容器，再使用docker-compose up -d 命令即可升级minio的版本
+    image: quay.io/minio/minio:RELEASE.2024-03-03T17-50-39Z
+    # 容器名
+    container_name: mnay_minio
+    # 挂载
+    volumes:
+      - ./data:/data
+    # 环境
+    environment:
+      - "MINIO_ROOT_PASSWORD=root@123456"
+      - "MINIO_ROOT_USER=mnayuser"
+    # 端口
+    ports:
+      # 宿主机端口映射到容器内端口
+      # 宿主机：容器
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    tty: true
+    # 重启策略
+    restart: always
