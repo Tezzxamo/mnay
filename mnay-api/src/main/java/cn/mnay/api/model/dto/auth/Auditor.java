@@ -1,12 +1,14 @@
 package cn.mnay.api.model.dto.auth;
 
 import cn.dev33.satoken.stp.StpUtil;
-import cn.mnay.api.util.TokenUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import cn.mnay.api.service.auth.MemberService;
 import cn.mnay.common.enums.error.CodeEnum;
 import cn.mnay.common.exception.BusinessException;
 import cn.mnay.common.model.dto.auth.MemberInfo;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -35,12 +37,30 @@ public class Auditor implements AuditorAware<String> {
         MemberInfo memberInfo = CURRENT_MEMBER_INFO.get();
         if (Objects.isNull(memberInfo)) {
             if (StpUtil.isLogin()) {
-                TokenUtil.setCurrentUserInfo((String) StpUtil.getLoginId());
+                setCurrentMemberInfo((String) StpUtil.getLoginId());
             } else {
                 log.warn("Auditor.getCurrentMemberInfo()未获取到MemberInfo");
             }
         }
         return CURRENT_MEMBER_INFO.get();
+    }
+
+    public static void setCurrentMemberInfo(String memberId) {
+        if (!StringUtils.isBlank(memberId)) {
+            // 得到memberId
+            // 通过id找到用户信息存入线程变量
+            MemberService memberService = SpringUtil.getBean(MemberService.class);
+            MemberDTO memberDTO = memberService.queryById(memberId);
+            Auditor.setCurrentMemberInfo(MemberInfo.builder()
+                    .memberId(memberId)
+                    .memberName(memberDTO.getMemberName())
+                    .memberType(memberDTO.getMemberType())
+                    .memberEmail(memberDTO.getMemberEmail())
+                    .locked(memberDTO.getLocked())
+                    .token(StpUtil.getTokenValue())
+                    .build());
+        }
+        log.error("memberId 为空,无法获取对应用户信息");
     }
 
     public static void setCurrentMemberInfo(MemberInfo info) {

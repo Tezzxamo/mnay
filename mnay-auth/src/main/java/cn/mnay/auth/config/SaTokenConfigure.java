@@ -6,7 +6,7 @@ import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.ListUtil;
-import cn.mnay.api.util.TokenUtil;
+import cn.mnay.api.model.dto.auth.Auditor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -34,7 +34,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                         // ①校验是否登录
                         StpUtil.checkLogin();
                         // ②设置当前用户信息
-                        TokenUtil.setCurrentUserInfo((String) StpUtil.getLoginId());
+                        Auditor.setCurrentMemberInfo((String) StpUtil.getLoginId());
                     });
             // 根据路由划分模块，不同模块不同鉴权
             // SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));

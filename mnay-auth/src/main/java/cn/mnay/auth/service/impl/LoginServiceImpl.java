@@ -3,19 +3,18 @@ package cn.mnay.auth.service.impl;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
-import cn.mnay.common.enums.auth.MemberTypeEnum;
 import cn.mnay.api.model.dto.auth.Auditor;
 import cn.mnay.api.model.dto.auth.MemberDTO;
-import cn.mnay.common.model.dto.auth.MemberInfo;
 import cn.mnay.api.model.request.auth.HttpAuthReq;
 import cn.mnay.api.model.request.auth.HttpLoginReq;
 import cn.mnay.api.service.auth.LoginService;
 import cn.mnay.api.service.auth.MemberService;
-import cn.mnay.api.util.TokenUtil;
 import cn.mnay.common.constant.RedisConstants;
+import cn.mnay.common.enums.auth.MemberTypeEnum;
 import cn.mnay.common.enums.error.CodeEnum;
 import cn.mnay.common.exception.BusinessException;
 import cn.mnay.common.manager.MailManager;
+import cn.mnay.common.model.dto.auth.MemberInfo;
 import cn.mnay.common.model.dto.auth.SendMailDTO;
 import cn.mnay.common.model.request.HttpEmailReq;
 import cn.mnay.common.model.request.HttpIdReq;
@@ -67,7 +66,6 @@ public class LoginServiceImpl implements LoginService {
                 }
                 StpUtil.login(memberDTO.getId());
                 memberService.updateLastLoginTime(memberDTO);
-                TokenUtil.setCurrentUserInfo(memberDTO.getId());
                 memberDTO.setToken(StpUtil.getTokenValue());
             }
             case CAPTCHA_PHONE, CAPTCHA_EMAIL -> {
@@ -85,7 +83,6 @@ public class LoginServiceImpl implements LoginService {
                 }
                 StpUtil.login(memberDTO.getId());
                 memberService.updateLastLoginTime(memberDTO);
-                TokenUtil.setCurrentUserInfo(memberDTO.getId());
                 memberDTO.setToken(StpUtil.getTokenValue());
             }
         }
