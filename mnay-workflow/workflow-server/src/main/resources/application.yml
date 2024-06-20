@@ -1,0 +1,69 @@
+spring:
+  profiles:
+    include: workflow
+  data:
+    redis:
+      database: ${REDIS_DATABASE:10}
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      username: ${REDIS_USERNAME:}
+      password: ${REDIS_PASSWORD:123456}
+      timeout: ${REDIS_TIMEOUT:6000ms}
+      jedis:
+        pool:
+          max-active: ${REDIS_MAX_ACTIVE:1000}  # 连接池最大连接数（使用负值表示没有限制）
+          max-wait: ${REDIS_MAX_WAIT:-1ms}      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: ${REDIS_MAX_IDLE:10}      # 连接池中的最大空闲连接
+          min-idle: ${REDIS_MIN_IDLE:0}       # 连接池中的最小空闲连接
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:mnay}?useUnicode=true&characterEncoding=utf-8&useSSL=false&nullCatalogMeansCurrent=true&serverTimezone=Asia/Shanghai&&allowPublicKeyRetrieval=true&allowMultiQueries=true&rewriteBatchedStatements=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 50
+      maximum-pool-size: 50
+      max-lifetime: 120000
+      idle-timeout: 120000
+      connection-test-query: SELECT 1
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+server:
+  port: 8888
+
+
+dubbo:
+  application:
+    name: WorkflowApplication
+    qos-enable: true
+    qos-port: 22222
+    qos-accept-foreign-ip: false
+  protocol:
+    name: dubbo
+    port: 20880
+  config-center:
+    address: zookeeper://127.0.0.1:2181
+  registry:
+    address: zookeeper://127.0.0.1:2181
+  metadata-report:
+    address: zookeeper://127.0.0.1:2181
+
+## swagger配置
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui/
+    ## 默认关闭，需要时设置开启
+    enabled: ${SWAGGER_ENABLE:true}
+    ## 默认不展开，方便查看
+    doc-expansion: none
+    ## model展开的深度
+    default-model-expand-depth: 10
+    # API 排序
+    tags-sorter: alpha
+    # Http方法排序
+    operations-sorter: method
+  packages-to-scan: cn.mnay.workflow.controller

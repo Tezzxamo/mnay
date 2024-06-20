@@ -7,7 +7,6 @@ spring:
     multipart:
       max-file-size: 10MB
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: ${JPA_DDL_AUTO:update}
     open-in-view: ${JPA_OPEN_IN_VIEW:false}
@@ -61,3 +60,25 @@ minio:
   bucketName: ${MINIO_BUCKET_NAME:files} #桶名称
   accessKey: ${MINIO_ACCESS_KEY:mnayuser} #访问的key
   secretKey: ${MINIO_SECRET_KEY:root@123456} #访问的密钥
+
+dubbo:
+  application:
+    name: ApplicationStarter
+    qos-enable: true
+    qos-port: 33333
+    qos-accept-foreign-ip: false
+  config-center:
+    address: zookeeper://127.0.0.1:2181
+  registry:
+    address: zookeeper://127.0.0.1:2181
+  metadata-report:
+    address: zookeeper://127.0.0.1:2181
+  protocol:
+    name: dubbo
+    port: -1
+  consumer:
+    check: false
+  provider:
+    timeout: 30000
+#  scan:
+#    base-packages: cn.mnay.auth.service,cn.mnay.oss.service

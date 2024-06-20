@@ -1,7 +1,7 @@
 buildscript {
     ext {
         springBootVersion = '3.3.0'
-        camundaVersion = '7.18.0'
+        camundaVersion = '7.21.0'
         lombokVersion = '1.18.32'
         hutoolVersion = '5.8.25'
         minioVersion = '8.5.7'
@@ -12,23 +12,24 @@ buildscript {
         mapstructVersion = '1.5.5.Final'
         mysqlVersion = '8.0.33'
         easyExcelVersion = '3.3.3'
+        dubboVersion = '3.2.13'
     }
 }
 
 plugins {
     id 'java'
+    id 'application'
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version '1.1.5'
 }
 
-bootJar {
+application {
     mainClass = 'cn.mnay.MnayServerApplication'
 }
 
 allprojects {
     group = 'cn.mnay'
     version = '1.0.0-SNAPSHOT'
-
 }
 
 java {
@@ -37,14 +38,6 @@ java {
 
 repositories {
     mavenCentral()
-}
-
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") // 引入Spring Boot BOM
-        // 引入camunda bom
-        mavenBom("org.camunda.bpm:camunda-bom:${camundaVersion}")
-    }
 }
 
 subprojects {
@@ -101,10 +94,12 @@ subprojects {
         // jaxb
         implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
+        // dubbo:
+        implementation platform("org.apache.dubbo:dubbo-bom:${dubboVersion}")
+        implementation platform("org.apache.dubbo:dubbo-dependencies-zookeeper-curator5:${dubboVersion}")
 
         // camunda
-        implementation "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter:${camundaVersion}"
-        implementation "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:${camundaVersion}"
+        implementation platform("org.camunda.bpm:camunda-bom:${camundaVersion}")
 
         // test:
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

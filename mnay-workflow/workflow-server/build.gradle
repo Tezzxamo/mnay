@@ -6,6 +6,16 @@ plugins {
 
 
 dependencies {
+    implementation project(':mnay-workflow:workflow-client')
+    implementation project(':mnay-common')
+    // camunda
+    implementation "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter"
+    implementation "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp"
+    // dubbo
+    implementation("org.apache.dubbo:dubbo-spring-boot-starter")
+    implementation("org.apache.dubbo:dubbo-dependencies-zookeeper-curator5"){
+        exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+    }
 }
 
 tasks.named('test') {

@@ -1,9 +1,3 @@
-plugins {
-    id 'java'
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
-}
-
 dependencies {
     implementation project(':mnay-common')
     implementation project(':mnay-api')
@@ -11,7 +5,13 @@ dependencies {
     implementation project(':mnay-oss')
     // 引用workflow-client
     implementation project(':mnay-workflow:workflow-client')
+    implementation project(':mnay-workflow:workflow-server')
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    // dubbo
+    implementation("org.apache.dubbo:dubbo-spring-boot-starter")
+    implementation("org.apache.dubbo:dubbo-dependencies-zookeeper-curator5"){
+        exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+    }
 }
 
 tasks.test {

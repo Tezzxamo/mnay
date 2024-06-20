@@ -1,0 +1,32 @@
+camunda:
+  bpm:
+    database:
+      type: mysql
+      # 不使用自动建表，使用sql文件手动建表
+      schema-update: false
+    # 流程引擎name
+    process-engine-name: camundaEngine
+    # 历史级别
+    history-level: full
+    # 是否自动部署
+    auto-deployment-enabled: false
+    id-generator: strong
+    deployment-resource-pattern:
+      - classpath:processes/*.bpmn20.xml
+    job-execution:
+      enabled: false
+    # 权限是否开启
+    authorization:
+      enabled: false
+    # 管理员用户属性
+    admin-user:
+      id: mnayuser
+      password: root@123456
+      first-name: mnayuser
+      last-name: mnayuser
+      email: mnay@mnay.cn
+    # 事件侦听是否开启
+    eventing:
+      execution: false
+      history: false
+      task: false
