@@ -6,6 +6,8 @@ plugins {
 
 
 dependencies {
+    // 引用api层
+    implementation project(':mnay-api')
 }
 
 tasks.named('test') {
