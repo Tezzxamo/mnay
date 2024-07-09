@@ -5,6 +5,7 @@ import cn.mnay.workflow.model.dto.ProcessDefinitionDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,6 +25,7 @@ import java.util.List;
  * <li>@EnableAspectJAutoProxy : 开启AOP功能</li>
  * <li>@EnableAsync : 开启异步功能</li>
  * <li>@EnableTransactionManagement : 开启事务功能</li>
+ * <li>@EnableDubbo : 开启Dubbo功能</li>
  */
 @EnableJpaAuditing
 @EnableConfigurationProperties
@@ -36,6 +38,7 @@ import java.util.List;
 @EnableTransactionManagement
 @RequiredArgsConstructor
 @Slf4j
+@EnableDubbo
 public class MnayServerApplication implements CommandLineRunner {
 
     @DubboReference

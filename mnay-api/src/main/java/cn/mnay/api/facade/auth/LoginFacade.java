@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping(value = "/auth/login", name = "AUTH-登录相关接口")
+@RequestMapping(value = "v1/auth/login", name = "AUTH-登录相关接口")
 public interface LoginFacade {
 
     @PostMapping(value = {"/login"}, name = "系统-用户登录")

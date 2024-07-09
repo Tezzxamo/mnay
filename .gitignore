@@ -29,3 +29,5 @@ build/
 
 # docker
 docker/local/minio/data/*
+docker/local/redis/data/*
+docker/local/zookeeper/data/*

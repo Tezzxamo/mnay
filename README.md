@@ -46,3 +46,4 @@ Maybe not allowed Yeah~
 - 2024-06-18：增加多个模块以及初始代码；增加多个技术依赖；项目成功启动；
 - 2024-06-20: workflow模块增加一些基础代码；
 - 2024-06-21: 项目model层、接口层设定；
+- 2024-07-09: docker-compose.yml文件编写；dubbo增加；修复一些bug；

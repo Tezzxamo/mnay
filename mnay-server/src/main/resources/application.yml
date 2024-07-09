@@ -82,3 +82,13 @@ dubbo:
     timeout: 30000
 #  scan:
 #    base-packages: cn.mnay.auth.service,cn.mnay.oss.service
+
+## 日志配置
+## 日志文件记录通过pm2来保存在服务器上，本地可以用logging.file.path,logging.file.name这两个配置进行配置
+logging:
+  pattern:
+    console: "%white(%d{yyyy-MM-dd HH:mm:ss.SSS}) %clr(%5p) %clr(${PID:-}){magenta} %yellow([%X{traceId}]) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} : %m%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:-} [%X{traceId}] [%15.15t] %-40.40logger{39} : %m%n"
+  level:
+    root: info
+    net.sf.json: error

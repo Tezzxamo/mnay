@@ -56,9 +56,10 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                 // 放行xxx
 
                 // 放行登录
-                "/login/password",
-                "/login/phone",
-                "/login/out",
+                "/v1/auth/login/login",
+                "/v1/auth/login/logout",
+                "/v1/auth/login/reset-captcha",
+                "/v1/auth/login/reset-password",
                 // 放行swagger页面、静态资源等
                 "/v3/api-docs",
                 "/**/*.html",

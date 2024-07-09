@@ -4,12 +4,14 @@ import cn.mnay.workflow.manager.ProDefManager;
 import cn.mnay.workflow.model.dto.ProcessDefinitionDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
 
+@EnableDubbo(scanBasePackages = "cn.mnay.workflow.manager")
 @SpringBootApplication(scanBasePackageClasses = {WorkflowApplication.class})
 @RequiredArgsConstructor
 @Slf4j

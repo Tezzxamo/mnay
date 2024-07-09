@@ -1,0 +1,112 @@
+# 下载镜像
+# docker pull canal/canal-server:v1.1.5
+# docker pull docker.elastic.co/elasticsearch/elasticsearch:7.17.7
+# docker pull docker.elastic.co/kibana/kibana:7.17.7
+
+# 1、创建network，用于容器间通信，以及指定容器ip
+networks:
+  my-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/16
+          gateway: 192.168.0.1
+
+# windows本地启动
+version: '3'
+services:
+  # 1、redis:latest
+  redis:
+    networks:
+      my-network:
+        ipv4_address: 192.168.0.11
+    # 镜像名
+    image: redis:latest
+    # 容器名
+    container_name: mnay_redis
+    volumes:
+      - ./redis/data:/data
+      - ./redis/redis.conf:/etc/redis.conf
+      - ./redis/redisbloom.so:/opt/redisbloom.so
+    command: redis-server /etc/redis.conf
+    # 端口
+    ports:
+      # 宿主机端口映射到容器内端口
+      # 宿主机：容器
+      - "6379:6379"
+    # 重启策略
+#    restart: always
+    privileged: true
+  # 2、elasticsearch:7.17.7
+  elasticsearch:
+    networks:
+      my-network:
+        ipv4_address: 192.168.0.12
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.7
+    container_name: mnay_es
+    volumes:
+      - ./es/data:/usr/share/elasticsearch/data
+      - ./es/plugins:/usr/share/elasticsearch/plugins
+      - ./es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    environment:
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=false" # 关闭安全认证
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+#    restart: always
+    privileged: true
+  # 3.kibana:7.17.7
+  kibana:
+    networks:
+      my-network:
+        ipv4_address: 192.168.0.13
+    image: docker.elastic.co/kibana/kibana:7.17.7
+    container_name: mnay_kibana
+    volumes:
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - "5601:5601"
+#    restart: always
+    privileged: true
+  # 4.minio
+  minio:
+    networks:
+      my-network:
+        ipv4_address: 192.168.0.14
+    # 镜像名 （来自于minio官方docker-compose.yaml文件）
+    # 升级版本只需要更改image的内容，然后删除原先的容器，再使用docker-compose up -d 命令即可升级minio的版本
+    image: quay.io/minio/minio:RELEASE.2024-03-03T17-50-39Z
+    # 容器名
+    container_name: mnay_minio
+    # 挂载
+    volumes:
+      - ./minio/data:/data
+    # 环境
+    environment:
+      - "MINIO_ROOT_PASSWORD=root@123456"
+      - "MINIO_ROOT_USER=mnayuser"
+    # 端口
+    ports:
+      # 宿主机端口映射到容器内端口
+      # 宿主机：容器
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    # 重启策略
+#    restart: always
+    tty: true
+  # 5.zookeeper
+  zookeeper:
+    networks:
+      my-network:
+        ipv4_address: 192.168.0.15
+    image: zookeeper:3.9.2
+    container_name: mnay_zookeeper
+    ports:
+      - "2181:2181"
+    restart: always
+    volumes:
+#      - ./zookeeper/data:/data
+      - ./zookeeper/zoo.cfg:/opt/zookeeper/conf/zoo.cfg

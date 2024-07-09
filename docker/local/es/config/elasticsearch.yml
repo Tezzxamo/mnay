@@ -1,0 +1,35 @@
+# 集群名称
+cluster.name: elasticsearch
+
+#network.bind_host:
+#network.publish_host:
+# 同时设置bind_host和publish_host两个参数
+network.host: 0.0.0.0
+
+# 节点名称
+node.name: node-1
+# 节点是否存储索引数据
+node.data: true
+# 节点是否有资格被选举为主节点
+node.master: true
+
+# path的相关配置使用默认配置，此处不进行配置
+
+# 跨域
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+
+
+# 对外服务的端口
+http.port: 9200
+# 节点间通信端口
+transport.tcp.port: 9300
+
+# 关闭安全认证
+xpack.security.enabled: false
+
+# 自动创建索引
+action.auto_create_index: true
+
+# 表示不去连接geoip.elastic.co
+ingest.geoip.downloader.enabled: false

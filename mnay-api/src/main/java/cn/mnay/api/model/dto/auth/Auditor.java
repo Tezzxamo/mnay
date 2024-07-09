@@ -59,8 +59,9 @@ public class Auditor implements AuditorAware<String> {
                     .locked(memberDTO.getLocked())
                     .token(StpUtil.getTokenValue())
                     .build());
+        } else {
+            log.error("memberId 为空,无法获取对应用户信息");
         }
-        log.error("memberId 为空,无法获取对应用户信息");
     }
 
     public static void setCurrentMemberInfo(MemberInfo info) {

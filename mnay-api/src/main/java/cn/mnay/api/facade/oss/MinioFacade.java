@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping(value = "/oss/minio", name = "Minio-文件上传-接口")
+@RequestMapping(value = "v1/oss/minio", name = "Minio-文件上传-接口")
 public interface MinioFacade {
 
     @PostMapping(value = "/uploadInit", name = "上传-初始化上传")

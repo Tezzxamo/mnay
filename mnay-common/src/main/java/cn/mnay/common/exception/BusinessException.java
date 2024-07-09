@@ -6,6 +6,7 @@ import cn.mnay.common.enums.error.CodeEnum;
 public class BusinessException extends BaseException {
 
     public BusinessException() {
+        super(CodeEnum.INTERFACE_CALL_ERROR.getCode(), CodeEnum.INTERFACE_CALL_ERROR.description());
     }
 
     public BusinessException(CodeEnum codeEnum) {
